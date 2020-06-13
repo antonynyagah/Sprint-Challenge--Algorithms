@@ -96,9 +96,42 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        
+        # This both breaks the recursion and takes care of the single element list case
+        if self.can_move_right() is False:
+            return self._list
 
+        # First I need to pick up the item in front of the robot
+        # print(self._item)
+        self.swap_item()
+        # print(self._item)
+
+        # robot starts moving right 
+        while self.can_move_right() is True:
+            self.move_right()
+
+            # And at every element, compare  if the item held is greater and if so, swap
+            if self.compare_item() == 1:
+                self.swap_item()
+                # print('swap')
+                # print(self._item)
+
+        # When the robot gets to the end, tell it to start going left
+        while self.can_move_left() is True:
+            self.move_left()
+
+            # And when it gets to the empty space, put down the item it's holding and stop
+            if self.compare_item() == None:
+                self.swap_item()
+                # print('swap')
+                # print(self._item)
+                break
+
+        # Take a step to the right
+        self.move_right()
+
+        # Start over
+        self.sort()
 
 if __name__ == "__main__":
     # Test our your implementation from the command line
